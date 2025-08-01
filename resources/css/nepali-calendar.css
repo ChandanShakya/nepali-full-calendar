@@ -10,7 +10,7 @@
 
 /* Header Styles */
 .nepali-calendar-header {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    background: linear-gradient(135deg, #f7f7f7, #f7f7f7);
     color: white;
     padding: 1rem 1.5rem;
     display: flex;
@@ -21,11 +21,12 @@
 .nepali-calendar-nav {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .nepali-calendar-nav-btn {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(31, 30, 30, 0.2);
     border: none;
     color: white;
     padding: 0.5rem;
@@ -38,7 +39,7 @@
 }
 
 .nepali-calendar-nav-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(31, 30, 30, 0.2);
     transform: scale(1.05);
 }
 
@@ -46,6 +47,8 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
+    text-align: center;
+    flex: 1;
 }
 
 .nepali-calendar-controls {
@@ -115,6 +118,11 @@
     font-size: 0.875rem;
 }
 
+/* Make Saturday (7th column) header red */
+.nepali-calendar-day-header:nth-child(7) {
+    color: #ef4444;
+}
+
 .nepali-calendar-day {
     background: white;
     min-height: 120px;
@@ -124,11 +132,12 @@
     cursor: pointer;
 }
 
+/* Reduced hover effect */
 .nepali-calendar-day:hover {
     background: #f8fafc;
-    transform: scale(1.02);
+    transform: scale(1.01);
     z-index: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .nepali-calendar-day.empty {
@@ -150,7 +159,7 @@
 }
 
 .nepali-calendar-day-number span {
-    font-size: 0.875rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: #111827;
     width: 24px;
@@ -161,16 +170,34 @@
     border-radius: 50%;
 }
 
+/* Make Saturday (7th column) day numbers red */
+.nepali-calendar-day:nth-child(7n+7) .nepali-calendar-day-number span {
+    color: #ef4444;
+}
+
 .nepali-calendar-day-number .today {
     background: #3b82f6;
     color: white;
     font-weight: 700;
     animation: pulse 2s infinite;
+    padding: 1rem;
+}
+
+/* Keep today's indicator white even if it's Saturday */
+.nepali-calendar-day:nth-child(7n+7) .nepali-calendar-day-number .today {
+    color: white !important;
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 /* Events */
@@ -200,11 +227,25 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.nepali-calendar-event.red { background: #ef4444; }
-.nepali-calendar-event.green { background: #10b981; }
-.nepali-calendar-event.yellow { background: #f59e0b; }
-.nepali-calendar-event.purple { background: #8b5cf6; }
-.nepali-calendar-event.pink { background: #ec4899; }
+.nepali-calendar-event.red {
+    background: #ef4444;
+}
+
+.nepali-calendar-event.green {
+    background: #10b981;
+}
+
+.nepali-calendar-event.yellow {
+    background: #f59e0b;
+}
+
+.nepali-calendar-event.purple {
+    background: #8b5cf6;
+}
+
+.nepali-calendar-event.pink {
+    background: #ec4899;
+}
 
 .nepali-calendar-event-delete {
     position: absolute;
@@ -245,8 +286,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .nepali-calendar-modal {
@@ -262,8 +308,15 @@
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .nepali-calendar-modal-header {
@@ -419,36 +472,36 @@
         gap: 1rem;
         padding: 1rem;
     }
-    
+
     .nepali-calendar-nav {
         justify-content: center;
     }
-    
+
     .nepali-calendar-day {
         min-height: 80px;
         padding: 0.25rem;
     }
-    
+
     .nepali-calendar-day-header {
         padding: 0.5rem 0.25rem;
         font-size: 0.75rem;
     }
-    
+
     .nepali-calendar-event {
         font-size: 0.625rem;
         padding: 1px 4px;
     }
-    
+
     .nepali-calendar-legend {
         padding: 0.75rem;
     }
-    
+
     .nepali-calendar-legend-content {
         flex-direction: column;
         gap: 0.75rem;
         align-items: flex-start;
     }
-    
+
     .nepali-calendar-legend-items {
         flex-wrap: wrap;
         gap: 0.75rem;
@@ -460,11 +513,11 @@
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .nepali-calendar-day {
         min-height: 60px;
     }
-    
+
     .nepali-calendar-modal {
         width: 95vw;
         padding: 1rem;

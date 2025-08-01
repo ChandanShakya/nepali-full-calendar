@@ -23,42 +23,55 @@ class NepaliCalendar extends Component
     public $eventTitle = '';
     public $eventDescription = '';
     public $eventDate = '';
-
-    // Corrected month names (without leading zeros)
-    public $nepaliMonths = [
-        1 => 'बैशाख',
-        2 => 'जेठ',
-        3 => 'आषाढ',
-        4 => 'श्रावण',
-        5 => 'भाद्र',
-        6 => 'आश्विन',
-        7 => 'कार्तिक',
-        8 => 'मंसिर',
-        9 => 'पौष',
-        10 => 'माघ',
-        11 => 'फाल्गुन',
-        12 => 'चैत्र'
-    ];
-
-    public $nepaliDays = [
-        'आइत',
-        'सोम',
-        'मंगल',
-        'बुध',
-        'बिही',
-        'शुक्र',
-        'शनि'
-    ];
+    public $language = 'nepali'; // Default language
 
     protected $listeners = ['refreshCalendar' => '$refresh'];
 
-    public function mount()
+    public function mount($lang = 'nepali')
     {
+        $this->language = $lang;
         $this->currentEngDate = now();
         $this->todayNepDate = $this->convertToNepaliDate($this->currentEngDate);
-        //dd($this->todayNepDate);
         $this->loadSampleEvents();
         $this->updateCalendar();
+    }
+
+    // Get translation for a key
+    protected function trans($key, $default = null)
+    {
+        $langFile = $this->language === 'english' ? 'english' : 'nepali';
+        $translations = include __DIR__ . "/../../lang/{$langFile}.php";
+        
+        $keys = explode('.', $key);
+        $value = $translations;
+        
+        foreach ($keys as $k) {
+            if (isset($value[$k])) {
+                $value = $value[$k];
+            } else {
+                return $default ?? $key;
+            }
+        }
+        
+        return $value;
+    }
+
+    // Get Nepali months based on language
+    public function getNepaliMonths()
+    {
+        return $this->trans('months');
+    }
+
+    // Get Nepali days based on language
+    public function getNepaliDays()
+    {
+        return $this->trans('days_short');
+    }
+
+    // Get numbers based on language
+    public function getNumbers()
+    {
+        return $this->trans('numbers');
     }
 
     // Helper function for more reliable date conversion
@@ -142,6 +155,7 @@ class NepaliCalendar extends Component
         $this->currentEngDate = $this->convertToEnglishDate($newNepaliDate);
         $this->updateCalendar();
     }
+
     public function goToToday()
     {
         $this->currentEngDate = now();
@@ -152,6 +166,11 @@ class NepaliCalendar extends Component
     public function changeView($view)
     {
         $this->view = $view;
+    }
+
+    public function changeLanguage($language)
+    {
+        $this->language = $language;
     }
 
     public function selectDate($day)
@@ -174,6 +193,9 @@ class NepaliCalendar extends Component
 
             $this->resetEventForm();
             $this->showEventModal = false;
+            
+            // You can add session flash message here
+            session()->flash('message', $this->trans('events.event_saved'));
         }
     }
 
@@ -182,6 +204,8 @@ class NepaliCalendar extends Component
         $this->events = array_filter($this->events, function ($event) use ($eventId) {
             return $event['id'] !== $eventId;
         });
+        
+        session()->flash('message', $this->trans('events.event_deleted'));
     }
 
     public function closeModal()
@@ -220,32 +244,72 @@ class NepaliCalendar extends Component
 
     private function loadSampleEvents()
     {
-        // Add some sample events
+        // Add some sample events with translation
         $this->events = [
             [
                 'id' => '1',
-                'title' => 'दशैं',
-                'description' => 'दशैं मुख्य दिन',
+                'title' => $this->trans('sample_events.dashain'),
+                'description' => $this->trans('sample_events.dashain_desc'),
                 'date' => '2081-07-10',
                 'color' => 'bg-red-500'
             ],
             [
                 'id' => '2',
-                'title' => 'तिहार',
-                'description' => 'लक्ष्मी पूजा',
+                'title' => $this->trans('sample_events.tihar'),
+                'description' => $this->trans('sample_events.tihar_desc'),
                 'date' => '2081-08-15',
                 'color' => 'bg-yellow-500'
+            ],
+            [
+                'id' => '3',
+                'title' => $this->trans('sample_events.new_year'),
+                'description' => $this->trans('sample_events.new_year_desc'),
+                'date' => '2082-01-01',
+                'color' => 'bg-green-500'
             ]
         ];
     }
 
+    // Format day number based on language
+    public function formatDayNumber($day)
+    {
+        $numbers = $this->getNumbers();
+        return $numbers[$day] ?? $day;
+    }
+
+    // Format year based on language
+    public function formatYear($year)
+    {
+        if ($this->language === 'nepali') {
+            $numbers = $this->getNumbers();
+            $yearStr = (string)$year;
+            $formattedYear = '';
+            
+            for ($i = 0; $i < strlen($yearStr); $i++) {
+                $digit = (int)$yearStr[$i];
+                $formattedYear .= $numbers[$digit] ?? $yearStr[$i];
+            }
+            
+            return $formattedYear;
+        }
+        
+        return $year;
+    }
+
     public function render()
     {
-        $monthName = $this->nepaliMonths[$this->month] ?? 'Unknown';
+        $nepaliMonths = $this->getNepaliMonths();
+        $monthName = $nepaliMonths[$this->month] ?? 'Unknown';
+        $formattedYear = $this->formatYear($this->year);
 
         return view('nepali-calendar::livewire.nepali-calendar', [
             'monthName' => $monthName,
+            'formattedYear' => $formattedYear,
             'weeks' => $this->getCalendarWeeks(),
+            'nepaliDays' => $this->getNepaliDays(),
+            'trans' => function($key, $default = null) {
+                return $this->trans($key, $default);
+            }
         ]);
     }
 

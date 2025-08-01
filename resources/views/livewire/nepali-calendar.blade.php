@@ -7,20 +7,37 @@
     <!-- Calendar Header -->
     <div class="nepali-calendar-header">
         <div class="nepali-calendar-nav">
-            <button wire:click="previousMonth" class="nepali-calendar-nav-btn">
+            <button wire:click="previousMonth" class="nepali-calendar-nav-btn" title="{{ $trans('previous_month') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
             </button>
             
-            <h2 class="nepali-calendar-title">{{ $monthName }} {{ $year }}</h2>
+            <h2 class="nepali-calendar-title">{{ $monthName }} {{ $formattedYear }}</h2>
             
-            <button wire:click="nextMonth" class="nepali-calendar-nav-btn">
+            <button wire:click="nextMonth" class="nepali-calendar-nav-btn" title="{{ $trans('next_month') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
             </button>
-        </div>  
+        </div>
+        
+        <!-- Language and View Controls -->
+        <div class="nepali-calendar-controls">
+            <!-- Language Switcher -->
+            <div class="nepali-calendar-language-switcher">
+                <button wire:click="changeLanguage('nepali')" 
+                        class="nepali-calendar-lang-btn {{ $language === 'nepali' ? 'active' : '' }}">
+                    नेपाली
+                </button>
+                <button wire:click="changeLanguage('english')" 
+                        class="nepali-calendar-lang-btn {{ $language === 'english' ? 'active' : '' }}">
+                    English
+                </button>
+            </div>
+            
+            
+        </div>
     </div>
 
     <!-- Calendar Body -->
@@ -44,7 +61,7 @@
                             @if($day)
                                 <div class="nepali-calendar-day-number">
                                     <span class="{{ $this->isToday($day) ? 'today' : '' }}">
-                                        {{ $day }}
+                                        {{ $this->formatDayNumber($day) }}
                                     </span>
                                 </div>
                                 
@@ -56,7 +73,7 @@
                                             {{ $event['title'] }}
                                             <button wire:click.stop="deleteEvent('{{ $event['id'] }}')" 
                                                     class="nepali-calendar-event-delete"
-                                                    title="घटना मेटाउनुहोस्">
+                                                    title="{{ $trans('events.delete_event') }}">
                                                 ×
                                             </button>
                                         </div>
@@ -72,7 +89,7 @@
         @if($view === 'week')
             <!-- Week View (You can implement this later) -->
             <div class="text-center py-8 text-gray-500">
-                हप्ता दृश्य अझै उपलब्ध छैन
+                {{ $trans('messages.week_view_unavailable') }}
             </div>
         @endif
     </div>
@@ -82,8 +99,8 @@
         <div class="nepali-calendar-modal-overlay" wire:click="closeModal">
             <div class="nepali-calendar-modal" wire:click.stop>
                 <div class="nepali-calendar-modal-header">
-                    <h3 class="nepali-calendar-modal-title">नयाँ घटना थप्नुहोस्</h3>
-                    <button wire:click="closeModal" class="nepali-calendar-modal-close">
+                    <h3 class="nepali-calendar-modal-title">{{ $trans('events.add_event') }}</h3>
+                    <button wire:click="closeModal" class="nepali-calendar-modal-close" title="{{ $trans('events.close') }}">
                         <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
@@ -92,7 +109,7 @@
                 
                 <form wire:submit.prevent="addEvent">
                     <div class="nepali-calendar-form-group">
-                        <label class="nepali-calendar-form-label">घटनाको नाम *</label>
+                        <label class="nepali-calendar-form-label">{{ $trans('events.event_title') }}</label>
                         <input type="text" 
                                wire:model="eventTitle" 
                                class="nepali-calendar-form-input"
@@ -101,14 +118,14 @@
                     </div>
                     
                     <div class="nepali-calendar-form-group">
-                        <label class="nepali-calendar-form-label">विवरण</label>
+                        <label class="nepali-calendar-form-label">{{ $trans('events.event_description') }}</label>
                         <textarea wire:model="eventDescription" 
                                   class="nepali-calendar-form-textarea"
                                   placeholder="घटनाको विवरण लेख्नुहोस्"></textarea>
                     </div>
                     
                     <div class="nepali-calendar-form-group">
-                        <label class="nepali-calendar-form-label">मिति</label>
+                        <label class="nepali-calendar-form-label">{{ $trans('events.date') }}</label>
                         <input type="text" 
                                wire:model="eventDate" 
                                class="nepali-calendar-form-input"
@@ -119,11 +136,11 @@
                         <button type="button" 
                                 wire:click="closeModal" 
                                 class="nepali-calendar-btn nepali-calendar-btn-secondary">
-                            रद्द गर्नुहोस्
+                           {{ $trans('events.cancel') }}
                         </button>
                         <button type="submit" 
                                 class="nepali-calendar-btn nepali-calendar-btn-primary">
-                            थप्नुहोस्
+                            {{ $trans('events.save_event') }}
                         </button>
                     </div>
                 </form>

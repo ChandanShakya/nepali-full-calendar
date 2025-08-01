@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'nepaliayush/nepali-full-calendar',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '80bfba11176248b8b98844f8a248ec23c3a09314',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -545,9 +545,9 @@
             'dev_requirement' => true,
         ),
         'nepaliayush/nepali-full-calendar' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '80bfba11176248b8b98844f8a248ec23c3a09314',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
