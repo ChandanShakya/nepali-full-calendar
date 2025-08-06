@@ -22,8 +22,11 @@ class NepaliFullCalendarServiceProvider extends ServiceProvider
         // Register Livewire component
         Livewire::component('nepali-calendar', NepaliCalendar::class);
 
-        // Load views
+        // Load package views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nepali-calendar');
+        
+        // Load application views (if you want to allow user customization)
+        $this->loadViewsFrom(resource_path('views/vendor/nepali-calendar'), 'nepali-calendar');
 
         // Publish assets
         if ($this->app->runningInConsole()) {
@@ -32,7 +35,7 @@ class NepaliFullCalendarServiceProvider extends ServiceProvider
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/nepali-calendar'),
             ], 'nepali-calendar-views');
 
-            // Publish only the specific CSS file we need
+            // Publish CSS
             $this->publishes([
                 __DIR__ . '/../resources/css/nepali-calendar.css' => public_path('vendor/nepali-calendar/nepali-calendar.css'),
             ], 'nepali-calendar-assets');

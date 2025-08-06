@@ -3,134 +3,103 @@
 return [
     /*
     |--------------------------------------------------------------------------
+    | Default Language
+    |--------------------------------------------------------------------------
+    |
+    | The default language for the calendar (nepali/english)
+    */
+    'default_language' => 'nepali',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Use Event Model
+    |--------------------------------------------------------------------------
+    |
+    | Whether to use an Eloquent model for events
+    */
+    'use_event_model' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Event Model
+    |--------------------------------------------------------------------------
+    |
+    | The model to use for calendar events
+    */
+    'event_model' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Default View
     |--------------------------------------------------------------------------
     |
-    | The default view to show when the calendar loads.
-    | Supported: "month", "week", "day"
-    |
+    | The default view to display (month/week)
     */
     'default_view' => 'month',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show Today Button
+    |--------------------------------------------------------------------------
+    |
+    | Whether to show the "Today" button
+    */
+    'with_today_button' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show Language Switcher
+    |--------------------------------------------------------------------------
+    |
+    | Whether to show the language switcher
+    */
+    'with_language_switcher' => true,
 
     /*
     |--------------------------------------------------------------------------
     | Event Colors
     |--------------------------------------------------------------------------
     |
-    | Default colors for different types of events
-    |
+    | Available colors for events
     */
-    'event_colors' => [
-        'default' => 'blue',
-        'festival' => 'red',
-        'personal' => 'green',
-        'meeting' => 'yellow',
-        'holiday' => 'purple',
-        'birthday' => 'pink',
-    ],
+    'colors' => ['blue', 'green', 'red', 'yellow', 'purple', 'pink'],
 
     /*
     |--------------------------------------------------------------------------
-    | Nepali Months
+    | Load CSS
     |--------------------------------------------------------------------------
     |
-    | Nepali month names mapping
-    |
+    | Whether to automatically load the package CSS
     */
-    'nepali_months' => [
-        1 => 'बैशाख',
-        2 => 'जेठ',
-        3 => 'आषाढ',
-        4 => 'श्रावण',
-        5 => 'भाद्र',
-        6 => 'आश्विन',
-        7 => 'कार्तिक',
-        8 => 'मंसिर',
-        9 => 'पौष',
-        10 => 'माघ',
-        11 => 'फाल्गुन',
-        12 => 'चैत्र',
-    ],
+    'load_css' => true,
 
     /*
     |--------------------------------------------------------------------------
-    | Nepali Days
+    | Load JS
     |--------------------------------------------------------------------------
     |
-    | Nepali day names
-    |
+    | Whether to automatically load the package JS
     */
-    'nepali_days' => [
-        'आइत',
-        'सोम',
-        'मंगल',
-        'बुध',
-        'बिही',
-        'शुक्र',
-        'शनि'
-    ],
+    'load_js' => true,
 
     /*
     |--------------------------------------------------------------------------
-    | Default Events
+    | Styles Configuration
     |--------------------------------------------------------------------------
     |
-    | Sample events to load by default
-    |
+    | Custom styles for various calendar elements
     */
-    'default_events' => [
-        [
-            'title' => 'दशैं',
-            'description' => 'दशैं मुख्य दिन',
-            'date' => '2081-07-10',
-            'color' => 'red',
-            'type' => 'festival'
-        ],
-        [
-            'title' => 'तिहार',
-            'description' => 'लक्ष्मी पूजा',
-            'date' => '2081-08-15',
-            'color' => 'yellow',
-            'type' => 'festival'
-        ],
-        [
-            'title' => 'नयाँ वर्ष',
-            'description' => 'नेपाली नयाँ वर्ष',
-            'date' => '2082-01-01',
-            'color' => 'red',
-            'type' => 'festival'
-        ]
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Features
-    |--------------------------------------------------------------------------
-    |
-    | Enable/disable calendar features
-    |
-    */
-    'features' => [
-        'add_events' => true,
-        'delete_events' => true,
-        'edit_events' => true,
-        'drag_drop' => false,
-        'print_view' => false,
-        'export' => false,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Styling
-    |--------------------------------------------------------------------------
-    |
-    | Calendar appearance settings
-    |
-    */
-    'styling' => [
-        'theme' => 'default', // default, dark, minimal
-        'primary_color' => '#3b82f6',
-        'border_radius' => '12px',
-        'animation' => true,
+    'styles' => [
+        'container' => 'bg-white rounded-lg shadow-lg overflow-hidden',
+        'header' => 'bg-white text-gray-800',
+        'navButton' => 'bg-gray-100 hover:bg-gray-200 text-gray-800',
+        'title' => 'text-gray-800',
+        'todayButton' => 'bg-indigo-600 hover:bg-indigo-700 text-white',
+        'languageSelect' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
+        'dayHeader' => 'bg-white text-gray-500',
+        'day' => 'bg-white hover:bg-gray-50',
+        'today' => 'bg-indigo-600 text-white',
+        'saturday' => 'text-red-500',
+        'event' => 'bg-indigo-500 text-white',
     ],
 ];
