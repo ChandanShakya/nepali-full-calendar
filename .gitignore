@@ -10,4 +10,3 @@ coverage/
 .vscode/
 *.swp
 *.swo
-node_modules/

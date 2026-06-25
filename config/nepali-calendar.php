@@ -69,18 +69,10 @@ return [
     | Load CSS
     |--------------------------------------------------------------------------
     |
-    | Whether to automatically load the package CSS
+    | Whether to automatically include the package CSS via @push('styles').
+    | Set to false if you want to include the CSS manually in your layout.
     */
     'load_css' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Load JS
-    |--------------------------------------------------------------------------
-    |
-    | Whether to automatically load the package JS
-    */
-    'load_js' => true,
 
     /*
     |--------------------------------------------------------------------------

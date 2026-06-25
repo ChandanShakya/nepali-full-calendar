@@ -16,7 +16,6 @@
     "authors": [
         {
             "name": "Ayush Nepali",
-            "email": "your@email.com",
             "homepage": "https://github.com/nepaliayush",
             "role": "Developer"
         }
@@ -24,7 +23,7 @@
     "require": {
         "php": "^8.1",
         "anuzpandey/laravel-nepali-date": "^2.3",
-        "illuminate/support": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
         "livewire/livewire": "^3.0"
     },
     "require-dev": {

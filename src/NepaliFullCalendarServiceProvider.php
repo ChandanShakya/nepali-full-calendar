@@ -2,6 +2,7 @@
 
 namespace Nepaliayush\NepaliFullCalendar;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Nepaliayush\NepaliFullCalendar\Livewire\NepaliCalendar;
@@ -10,7 +11,6 @@ class NepaliFullCalendarServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // Merge package configuration
         $this->mergeConfigFrom(
             __DIR__ . '/../config/nepali-calendar.php',
             'nepali-calendar'
@@ -19,38 +19,61 @@ class NepaliFullCalendarServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        // Register Livewire component
         Livewire::component('nepali-calendar', NepaliCalendar::class);
 
-        // Load package views
+        Blade::anonymousComponentPath(__DIR__ . '/../resources/views/components', 'nepali-calendar');
+
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nepali-calendar');
-        
-        // Load application views (if you want to allow user customization)
         $this->loadViewsFrom(resource_path('views/vendor/nepali-calendar'), 'nepali-calendar');
 
-        // Publish assets
-        if ($this->app->runningInConsole()) {
-            // Publish views
-            $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/nepali-calendar'),
-            ], 'nepali-calendar-views');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'nepali-calendar');
 
-            // Publish CSS
-            $this->publishes([
-                __DIR__ . '/../resources/css/nepali-calendar.css' => public_path('vendor/nepali-calendar/nepali-calendar.css'),
-            ], 'nepali-calendar-assets');
+        $this->publishAssets();
 
-            // Publish config
-            $this->publishes([
-                __DIR__ . '/../config/nepali-calendar.php' => config_path('nepali-calendar.php'),
-            ], 'nepali-calendar-config');
+        $this->loadCssFromPublic();
+    }
 
-            // Publish all assets at once
-            $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/nepali-calendar'),
-                __DIR__ . '/../resources/css' => public_path('vendor/nepali-calendar'),
-                __DIR__ . '/../config/nepali-calendar.php' => config_path('nepali-calendar.php'),
-            ], 'nepali-calendar');
+    protected function publishAssets(): void
+    {
+        if (!$this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/nepali-calendar'),
+        ], 'nepali-calendar-views');
+
+        $this->publishes([
+            __DIR__ . '/../resources/css/nepali-calendar.css' => public_path('vendor/nepali-calendar/css/nepali-calendar.css'),
+        ], 'nepali-calendar-assets');
+
+        $this->publishes([
+            __DIR__ . '/../lang' => lang_path('vendor/nepali-calendar'),
+        ], 'nepali-calendar-lang');
+
+        $this->publishes([
+            __DIR__ . '/../config/nepali-calendar.php' => config_path('nepali-calendar.php'),
+        ], 'nepali-calendar-config');
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/nepali-calendar'),
+            __DIR__ . '/../resources/css' => public_path('vendor/nepali-calendar/css'),
+            __DIR__ . '/../lang' => lang_path('vendor/nepali-calendar'),
+            __DIR__ . '/../config/nepali-calendar.php' => config_path('nepali-calendar.php'),
+        ], 'nepali-calendar');
+    }
+
+    protected function loadCssFromPublic(): void
+    {
+        $source = __DIR__ . '/../resources/css/nepali-calendar.css';
+        $dest = public_path('vendor/nepali-calendar/css/nepali-calendar.css');
+
+        if (!file_exists($dest)) {
+            $dir = dirname($dest);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            copy($source, $dest);
         }
     }
 }

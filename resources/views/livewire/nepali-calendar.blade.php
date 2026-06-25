@@ -45,7 +45,7 @@
                 <button 
                     wire:click="previousMonth" 
                     class="nepali-calendar-nav-btn {{ $styles['navButton'] ?? 'bg-gray-100 hover:bg-gray-200 text-gray-800' }}"
-                    title="{{ __('nepali-calendar::nepali.previous_month') }}"
+                    title="{{ __('nepali-calendar::calendar.previous_month') }}"
                 >
                     @include('nepali-calendar::icons.chevron-left')
                 </button>
@@ -57,7 +57,7 @@
                 <button 
                     wire:click="nextMonth" 
                     class="nepali-calendar-nav-btn {{ $styles['navButton'] ?? 'bg-gray-100 hover:bg-gray-200 text-gray-800' }}"
-                    title="{{ __('nepali-calendar::nepali.next_month') }}"
+                    title="{{ __('nepali-calendar::calendar.next_month') }}"
                 >
                     @include('nepali-calendar::icons.chevron-right')
                 </button>
@@ -86,7 +86,7 @@
                             wire:click="goToToday" 
                             class="nepali-calendar-today-btn {{ $styles['todayButton'] ?? 'bg-indigo-600 hover:bg-indigo-700 text-white' }}"
                         >
-                                {{ $trans('today') }}
+                                {{ __('nepali-calendar::calendar.today') }}
                         </button>
                     @endif
                 </div>
@@ -130,7 +130,7 @@
                                                 <button 
                                                     wire:click.stop="deleteEvent('{{ $event['id'] }}')" 
                                                     class="nepali-calendar-event-delete opacity-0 hover:opacity-100 transition-opacity"
-                                                    title="{{ __('nepali-calendar::nepali.events.delete_event') }}"
+                                                    title="{{ __('nepali-calendar::calendar.events.delete_event') }}"
                                                 >
                                                     @include('nepali-calendar::icons.x-mark')
                                                 </button>
@@ -145,7 +145,7 @@
             @elseif($view === 'week')
                 <!-- Week View -->
                 <div class="text-center py-8 text-gray-500">
-                    {{ __('nepali-calendar::nepali.messages.week_view_unavailable') }}
+                    {{ __('nepali-calendar::calendar.messages.week_view_unavailable') }}
                 </div>
             @endif
         </div>
@@ -176,12 +176,12 @@
                 >
                     <div class="nepali-calendar-modal-header flex justify-between items-center border-b p-4">
                         <h3 class="nepali-calendar-modal-title text-lg font-medium text-gray-900">
-                            {{ __('nepali-calendar::nepali.events.add_event') }}
+                            {{ __('nepali-calendar::calendar.events.add_event') }}
                         </h3>
                         <button 
                             wire:click="closeModal"
                             class="nepali-calendar-modal-close text-gray-400 hover:text-gray-500"
-                            title="{{ __('nepali-calendar::nepali.events.close') }}"
+                            title="{{ __('nepali-calendar::calendar.events.close') }}"
                         >
                             @include('nepali-calendar::icons.x-mark')
                         </button>
@@ -190,32 +190,32 @@
                     <form wire:submit.prevent="addEvent" class="p-4">
                         <div class="nepali-calendar-form-group mb-4">
                             <label class="nepali-calendar-form-label block text-sm font-medium text-gray-700 mb-1">
-                                {{ __('nepali-calendar::nepali.events.event_title') }}
+                                {{ __('nepali-calendar::calendar.events.event_title') }}
                             </label>
                             <input 
                                 type="text" 
                                 wire:model="eventTitle" 
                                 class="nepali-calendar-form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                placeholder="{{ __('nepali-calendar::nepali.events.event_title_placeholder') }}"
+                                placeholder="{{ __('nepali-calendar::calendar.events.event_title_placeholder') }}"
                                 required
                             >
                         </div>
                         
                         <div class="nepali-calendar-form-group mb-4">
                             <label class="nepali-calendar-form-label block text-sm font-medium text-gray-700 mb-1">
-                                {{ __('nepali-calendar::nepali.events.event_description') }}
+                                {{ __('nepali-calendar::calendar.events.event_description') }}
                             </label>
                             <textarea 
                                 wire:model="eventDescription" 
                                 class="nepali-calendar-form-textarea block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 rows="3"
-                                placeholder="{{ __('nepali-calendar::nepali.events.event_description_placeholder') }}"
+                                placeholder="{{ __('nepali-calendar::calendar.events.event_description_placeholder') }}"
                             ></textarea>
                         </div>
                         
                         <div class="nepali-calendar-form-group mb-4">
                             <label class="nepali-calendar-form-label block text-sm font-medium text-gray-700 mb-1">
-                                {{ __('nepali-calendar::nepali.events.date') }}
+                                {{ __('nepali-calendar::calendar.events.date') }}
                             </label>
                             <input 
                                 type="text" 
@@ -227,7 +227,7 @@
                         
                         <div class="nepali-calendar-form-group mb-4">
                             <label class="nepali-calendar-form-label block text-sm font-medium text-gray-700 mb-1">
-                                {{ __('nepali-calendar::nepali.events.color') }}
+                                {{ __('nepali-calendar::calendar.events.color') }}
                             </label>
                             <div class="color-options flex gap-2">
                                 @foreach($colors as $color)
@@ -250,13 +250,13 @@
                                 wire:click="closeModal" 
                                 class="nepali-calendar-btn-secondary px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                {{ __('nepali-calendar::nepali.events.cancel') }}
+                                {{ __('nepali-calendar::calendar.events.cancel') }}
                             </button>
                             <button 
                                 type="submit" 
                                 class="nepali-calendar-btn-primary px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                {{ __('nepali-calendar::nepali.events.save_event') }}
+                                {{ __('nepali-calendar::calendar.events.save_event') }}
                             </button>
                         </div>
                     </form>
@@ -268,28 +268,24 @@
         <div class="nepali-calendar-legend p-4 border-t flex flex-wrap gap-4 text-sm">
             <div class="legend-item flex items-center gap-2">
                 <span class="legend-color w-3 h-3 rounded-full {{ $styles['today'] }}"></span>
-                <span class="legend-label text-gray-500">{{ __('nepali-calendar::nepali.today') }}</span>
+                <span class="legend-label text-gray-500">{{ __('nepali-calendar::calendar.today') }}</span>
             </div>
             <div class="legend-item flex items-center gap-2">
                 <span class="legend-color w-3 h-3 rounded-full bg-green-500"></span>
-                <span class="legend-label text-gray-500">{{ __('nepali-calendar::nepali.selected') }}</span>
+                <span class="legend-label text-gray-500">{{ __('nepali-calendar::calendar.selected') }}</span>
             </div>
             <div class="legend-item flex items-center gap-2">
                 <span class="legend-color w-3 h-3 rounded-full {{ $styles['event'] }}"></span>
-                <span class="legend-label text-gray-500">{{ __('nepali-calendar::nepali.has_events') }}</span>
+                <span class="legend-label text-gray-500">{{ __('nepali-calendar::calendar.has_events') }}</span>
             </div>
         </div>
     </div>
 </div>
 
-@push('styles')
+@once
     @if(config('nepali-calendar.load_css', true))
-        <link rel="stylesheet" href="{{ asset('vendor/nepali-calendar/css/nepali-calendar.css') }}">
+        @push('styles')
+            <link rel="stylesheet" href="{{ asset('vendor/nepali-calendar/css/nepali-calendar.css') }}">
+        @endpush
     @endif
-@endpush
-
-@push('scripts')
-    @if(config('nepali-calendar.load_js', true))
-        <script src="{{ asset('vendor/nepali-calendar/js/nepali-calendar.js') }}" defer></script>
-    @endif
-@endpush
+@endonce
